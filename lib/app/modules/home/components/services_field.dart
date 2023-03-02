@@ -41,18 +41,33 @@ class ServicesField extends GetView<HomeController> {
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               physics: const BouncingScrollPhysics(),
-              child: Obx(() {
-                return Row(
-                  children: controller.services
-                      .map(
-                        (e) => Padding(
-                          padding: const EdgeInsets.only(right: 10),
-                          child: ServiceFieldComponent(info: e),
-                        ),
-                      )
-                      .toList(),
-                );
-              }),
+              child: Obx(
+                () {
+                  return controller.services.isEmpty
+                      ? Container(
+                          width: 280,
+                          height: 200,
+                          padding: const EdgeInsets.all(defaultPadding),
+                          decoration: const BoxDecoration(
+                            color: secondaryColor,
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: const Center(
+                            child: Text("Empty"),
+                          ),
+                        )
+                      : Row(
+                          children: controller.services
+                              .map(
+                                (e) => Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: ServiceFieldComponent(info: e),
+                                ),
+                              )
+                              .toList(),
+                        );
+                },
+              ),
             ),
           ),
         )
@@ -85,19 +100,31 @@ class ServicesField extends GetView<HomeController> {
                 PointerDeviceKind.stylus
               }),
               child: Obx(() {
-                return PageView.builder(
-                  itemCount: controller.services.length,
-                  controller: pageController,
+                return controller.services.isEmpty
+                    ? Container(
+                        height: 200,
+                        padding: const EdgeInsets.all(defaultPadding),
+                        decoration: const BoxDecoration(
+                          color: secondaryColor,
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        child: const Center(
+                          child: Text("Empty"),
+                        ),
+                      )
+                    : PageView.builder(
+                        itemCount: controller.services.length,
+                        controller: pageController,
 
-                  // itemCount: pages.length,
-                  itemBuilder: (_, idx) {
-                    return Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child:
-                          ServiceFieldComponent(info: controller.services[idx]),
-                    );
-                  },
-                );
+                        // itemCount: pages.length,
+                        itemBuilder: (_, idx) {
+                          return Padding(
+                            padding: const EdgeInsets.only(right: 10),
+                            child: ServiceFieldComponent(
+                                info: controller.services[idx]),
+                          );
+                        },
+                      );
               }),
             ),
           ),

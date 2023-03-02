@@ -4,11 +4,11 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 MqttBrowserClient newMqttClient({required String mqttAddr}) {
   var client =
-      MqttBrowserClient('ws://$mqttAddr', '', maxConnectionAttempts: 5);
+      MqttBrowserClient('wss://$mqttAddr', '', maxConnectionAttempts: 5);
   client.logging(on: false);
   client.setProtocolV311();
   client.connectTimeoutPeriod = 10000;
-  client.port = 10001;
+  client.port = 443;
   client.onDisconnected = onDisconnected;
   client.onConnected = onConnected;
   client.onSubscribed = onSubscribed;

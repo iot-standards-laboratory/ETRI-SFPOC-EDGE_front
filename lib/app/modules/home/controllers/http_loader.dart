@@ -6,8 +6,10 @@ import 'package:front/app/model/service.dart';
 import 'package:front/constants.dart';
 import 'package:http/http.dart' as http;
 
+final uriGetter = Uri.base.scheme == 'http' ? Uri.http : Uri.https;
+
 Future<List<Service>> loadServices() async {
-  var resp = await http.get(Uri.http(serverAddr, '/api/v2/svcs'));
+  var resp = await http.get(uriGetter(serverAddr, '/api/v2/svcs'));
 
   var body = jsonDecode(resp.body);
 
@@ -21,7 +23,7 @@ Future<List<Service>> loadServices() async {
 }
 
 Future<List<Agent>> loadAgents() async {
-  var resp = await http.get(Uri.http(serverAddr, '/api/v2/agents'));
+  var resp = await http.get(uriGetter(serverAddr, '/api/v2/agents'));
 
   var body = jsonDecode(resp.body);
 
@@ -33,7 +35,7 @@ Future<List<Agent>> loadAgents() async {
 }
 
 Future<List<Controller>> loadCtrls() async {
-  var resp = await http.get(Uri.http(serverAddr, '/api/v2/ctrls'));
+  var resp = await http.get(uriGetter(serverAddr, '/api/v2/ctrls'));
 
   var body = jsonDecode(resp.body);
   print(body);
@@ -47,7 +49,7 @@ Future<List<Controller>> loadCtrls() async {
 
 Future<int> installSvc(Service svc) async {
   var resp = await http.post(
-    Uri.http(serverAddr, '/api/v2/svcs'),
+    uriGetter(serverAddr, '/api/v2/svcs'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'service_name': svc.name!,
