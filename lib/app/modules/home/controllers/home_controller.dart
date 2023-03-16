@@ -41,7 +41,7 @@ class HomeController extends GetxController {
     mqttClient!.connectionMessage = connMess;
 
     try {
-      await mqttClient!.connect('etri', 'etrismartfarm');
+      await mqttClient!.connect('etrimqtt', 'fainal2311');
     } on Exception catch (e) {
       print('client exception - $e');
       mqttClient!.disconnect();

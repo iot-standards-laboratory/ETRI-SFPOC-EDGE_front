@@ -5,7 +5,6 @@ import 'package:front/app/model/service.dart';
 import 'package:front/colors.dart';
 import 'package:front/constants.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../controllers/home_controller.dart';
@@ -198,7 +197,11 @@ class ServiceFieldComponent extends StatelessWidget {
                         color: Colors.white,
                       ),
                       onPressed: () async {
-                        if (info.id == '') installSvc(info);
+                        if (info.id == '') {
+                          installSvc(info);
+                        } else {
+                          deleteSvc(info);
+                        }
                       }),
                 ],
               ),
@@ -221,7 +224,9 @@ class ServiceFieldComponent extends StatelessWidget {
                 Get.snackbar("Failed", "Service is not working");
                 return;
               }
-              launchUrlString("http://$serverAddr/svc/${info.id}");
+              launchUrlString(
+                "${Uri.base.scheme}://$serverAddr/svc/${info.id}",
+              );
             },
           )
         ],

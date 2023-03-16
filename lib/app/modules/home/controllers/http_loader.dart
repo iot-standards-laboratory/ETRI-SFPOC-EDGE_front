@@ -58,3 +58,15 @@ Future<int> installSvc(Service svc) async {
 
   return resp.statusCode;
 }
+
+Future<int> deleteSvc(Service svc) async {
+  var resp = await http.delete(
+    uriGetter(serverAddr, '/api/v2/svcs'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      'service_name': svc.name!,
+    },
+  );
+
+  return resp.statusCode;
+}
