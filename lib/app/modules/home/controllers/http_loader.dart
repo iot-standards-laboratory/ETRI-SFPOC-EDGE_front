@@ -53,6 +53,7 @@ Future<int> installSvc(Service svc) async {
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       'service_name': svc.name!,
+      'service_id': svc.id!,
     },
   );
 
@@ -64,7 +65,7 @@ Future<int> deleteSvc(Service svc) async {
     uriGetter(serverAddr, '/api/v2/svcs'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'service_name': svc.name!,
+      'service_id': svc.id!,
     },
   );
 

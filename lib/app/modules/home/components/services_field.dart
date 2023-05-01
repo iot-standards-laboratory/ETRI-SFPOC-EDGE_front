@@ -191,13 +191,13 @@ class ServiceFieldComponent extends StatelessWidget {
                   IconButton(
                       icon: Icon(
                         size: 24,
-                        info.id == ''
+                        info.cid == ''
                             ? Icons.download_outlined
                             : Icons.delete_outlined,
                         color: Colors.white,
                       ),
                       onPressed: () async {
-                        if (info.id == '') {
+                        if (info.cid == '') {
                           installSvc(info);
                         } else {
                           deleteSvc(info);
@@ -215,7 +215,7 @@ class ServiceFieldComponent extends StatelessWidget {
           ),
           TextButton(
             child: Text(
-              info.id!,
+              info.cid!,
               maxLines: 1,
               // overflow: ,
             ),
@@ -225,7 +225,7 @@ class ServiceFieldComponent extends StatelessWidget {
                 return;
               }
               launchUrlString(
-                "${Uri.base.scheme}://$serverAddr/svc/${info.id}",
+                "${Uri.base.scheme}://$serverAddr/svc/${info.cid}",
               );
             },
           )
