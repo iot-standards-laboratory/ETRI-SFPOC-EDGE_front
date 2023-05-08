@@ -101,10 +101,15 @@ class InitView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Do you want to init this SG-Edge node?',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+                const Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 10.0),
+                    child: Text(
+                      'Do you want to proceed with the initialization using the entered information?',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
                 InkWell(
