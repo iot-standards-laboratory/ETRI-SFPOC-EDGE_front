@@ -15,7 +15,11 @@ class InitView extends StatelessWidget {
         autovalidateMode: AutovalidateMode.disabled,
         child: Column(
           children: [
-            const Icon(Icons.android, size: 120),
+            SizedBox(
+                child: Image.asset(
+              'images/sg-icon.png',
+              width: 120,
+            )),
             if (!Responsive.isMobile(context)) const SizedBox(height: 10),
             Text(
               'ETRI Smart Greenhouse',
@@ -43,10 +47,12 @@ class InitView extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: TextFormField(
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: 'MQTT Address',
+                      hintStyle: TextStyle(color: Colors.black.withAlpha(120)),
                       border: InputBorder.none,
                     ),
+                    style: const TextStyle(color: Colors.black),
                     validator: (val) {
                       if (val!.isEmpty) {
                         return 'MQTT Address는 필수사항입니다.';
@@ -61,6 +67,63 @@ class InitView extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey[200],
+                  border: Border.all(color: Colors.white),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Consul address',
+                      hintStyle: TextStyle(color: Colors.black.withAlpha(120)),
+                      border: InputBorder.none,
+                    ),
+                    style: const TextStyle(color: Colors.black),
+                    validator: (val) {
+                      if (val!.isEmpty) {
+                        return 'Consul address는 필수사항입니다.';
+                      }
+                      return null;
+                    },
+                    onSaved: (val) {
+                      mqttAddr = val!;
+                    },
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'Do you want to init this SG-Edge node?',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                InkWell(
+                  customBorder: const StadiumBorder(),
+                  child: const Padding(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
+                    child: Text(
+                      'Init Now',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.lightBlue,
+                      ),
+                    ),
+                  ),
+                  onTap: () {},
+                ),
+              ],
+            )
           ],
         ),
       ),
