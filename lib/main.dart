@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:front/app/routes/app_pages.dart';
@@ -5,16 +7,27 @@ import 'package:front/colors.dart';
 import 'package:front/constants.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
-void main() {
+Future<String> load() async {
+  final uriGetter = Uri.base.scheme == 'http' ? Uri.http : Uri.https;
+  var resp = await http.get(uriGetter(serverAddr, '/loading'));
+  var body = jsonDecode(resp.body);
+  return body["page"];
+}
+
+void main() async {
   serverAddr = kIsWeb && !kDebugMode
       ? '${Uri.base.host}:${Uri.base.port}'
       : 'etri.godopu.com:3000';
-  runApp(const MyApp());
+
+  var page = await load();
+  runApp(MyApp(page: page));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final String page;
+  const MyApp({super.key, required this.page});
 
   // This widget is the root of your application.
   @override
@@ -29,7 +42,7 @@ class MyApp extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       getPages: AppPages.routes,
-      initialRoute: AppPages.INITIAL,
+      initialRoute: page,
     );
   }
 }
