@@ -71,3 +71,19 @@ Future<int> deleteSvc(Service svc) async {
 
   return resp.statusCode;
 }
+
+Future<(int, dynamic)> loadInitInformation() async {
+  var resp = await http.get(
+    uriGetter(serverAddr, '/api/v2/home'),
+  );
+
+  try {
+    print(resp.body);
+    var obj = jsonDecode(resp.body);
+
+    return (resp.statusCode, obj);
+  } catch (e) {
+    print(e.toString());
+  }
+  return (-1, null);
+}

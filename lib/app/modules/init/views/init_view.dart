@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/components/responsive.dart';
+import 'package:front/app/routes/app_pages.dart';
+import 'package:front/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_indicator/loading_indicator.dart';
+
+import '../utils/init_controller.dart';
 
 class InitView extends StatelessWidget {
   InitView({super.key});
   var mqttAddr = '';
+  var consulAddr = '';
   final formKey = GlobalKey<FormState>();
 
   Widget renderBody(BuildContext context, {required double maxWidth}) {
@@ -91,7 +97,7 @@ class InitView extends StatelessWidget {
                       return null;
                     },
                     onSaved: (val) {
-                      mqttAddr = val!;
+                      consulAddr = val!;
                     },
                   ),
                 ),
@@ -125,7 +131,43 @@ class InitView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onTap: () {},
+                  onTap: () async {
+                    if (!formKey.currentState!.validate()) return;
+                    formKey.currentState!.save();
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const AlertDialog(
+                          elevation: 0,
+                          backgroundColor: Colors.transparent,
+                          content: Center(
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: LoadingIndicator(
+                                indicatorType:
+                                    Indicator.ballTrianglePathColoredFilled,
+                                colors: kDefaultRainbowColors,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    );
+
+                    var (code, body) = await submitInit(mqttAddr, consulAddr);
+                    Future.delayed(const Duration(seconds: 1), () {
+                      Navigator.pop(context, true);
+
+                      if (code != 200) {
+                        print("error: ${body.toString()}");
+                        return;
+                      }
+
+                      Navigator.popAndPushNamed(context, Routes.HOME);
+                    });
+                  },
                 ),
               ],
             )

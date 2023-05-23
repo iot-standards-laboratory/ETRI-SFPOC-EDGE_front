@@ -29,7 +29,19 @@ class HomeController extends GetxController {
 
   MqttBrowserClient? mqttClient;
   void mqttInit() async {
-    mqttClient = newMqttClient(mqttAddr: "mqtt.godopu.com");
+    var (code, info) = await loadInitInformation();
+
+    if (code != 200) {
+      return;
+    }
+
+    var mqttAddr = info['mqttAddr'];
+    var parsedAddress = Uri.parse(mqttAddr);
+
+    mqttClient = newMqttClient(
+        scheme: parsedAddress.scheme,
+        host: parsedAddress.host,
+        port: parsedAddress.port);
 
     final connMess = MqttConnectMessage()
         // .withClientIdentifier('etri/etrismartfarm')
