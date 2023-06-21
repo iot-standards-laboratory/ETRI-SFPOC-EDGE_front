@@ -21,7 +21,7 @@ class ServicesField extends GetView<HomeController> {
       children: [
         Text(
           'Services',
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
               ),
@@ -80,7 +80,7 @@ class ServicesField extends GetView<HomeController> {
       children: [
         Text(
           'Services',
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -167,7 +167,7 @@ class ServiceFieldComponent extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 3),
                 child: Text(
                   '${info.numOfCtrls} devices',
-                  style: Theme.of(context).textTheme.caption!.copyWith(
+                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: Colors.white,
                         fontSize: 18,
                       ),

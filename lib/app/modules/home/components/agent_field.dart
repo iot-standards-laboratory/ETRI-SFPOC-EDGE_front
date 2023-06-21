@@ -15,7 +15,7 @@ class AgentField extends GetView<HomeController> {
       children: [
         Text(
           'Agents',
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
               ),
@@ -36,7 +36,7 @@ class AgentField extends GetView<HomeController> {
                     DataColumn(
                       label: Text(
                         'Name',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -46,7 +46,7 @@ class AgentField extends GetView<HomeController> {
                     DataColumn(
                       label: Text(
                         'ID',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -56,7 +56,7 @@ class AgentField extends GetView<HomeController> {
                     DataColumn(
                       label: Text(
                         'Status',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -81,7 +81,7 @@ class AgentField extends GetView<HomeController> {
       children: [
         Text(
           'Agents',
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
               ),
@@ -154,7 +154,7 @@ Widget _agentComponent(BuildContext context, Agent agent) {
       children: [
         Text(
           agent.name,
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
               ),

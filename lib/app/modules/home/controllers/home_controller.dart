@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/controller/centrifugo.dart';
 import 'package:front/app/controller/mqttclient.dart';
 import 'package:front/app/model/agent.dart';
 import 'package:front/app/model/controller.dart';
@@ -17,10 +16,6 @@ class HomeController extends GetxController {
   var services = <Service>[].obs;
   var agents = <Agent>[].obs;
   var ctrls = <Controller>[].obs;
-  @override
-  void onInit() {
-    super.onInit();
-  }
 
   // centrifuge.Client? client = null;
   // void initCentrifuge() async {

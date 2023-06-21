@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/components/responsive.dart';
 import 'package:front/colors.dart';
 
 class ProfileCard extends StatelessWidget {

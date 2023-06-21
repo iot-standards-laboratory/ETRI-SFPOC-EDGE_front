@@ -1,7 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:front/app/components/responsive.dart';
-import 'package:front/app/model/agent.dart';
 import 'package:front/app/model/controller.dart';
 import 'package:front/app/modules/home/controllers/home_controller.dart';
 import 'package:front/colors.dart';
@@ -16,7 +15,7 @@ class ControllerField extends GetView<HomeController> {
       children: [
         Text(
           'Controllers',
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
               ),
@@ -37,7 +36,7 @@ class ControllerField extends GetView<HomeController> {
                     DataColumn(
                       label: Text(
                         'Name',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -47,7 +46,7 @@ class ControllerField extends GetView<HomeController> {
                     DataColumn(
                       label: Text(
                         'ID',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -57,7 +56,7 @@ class ControllerField extends GetView<HomeController> {
                     DataColumn(
                       label: Text(
                         'Agent ID',
-                        style: Theme.of(context).textTheme.caption!.copyWith(
+                        style: Theme.of(context).textTheme.bodySmall!.copyWith(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.w700,
@@ -82,7 +81,7 @@ class ControllerField extends GetView<HomeController> {
       children: [
         Text(
           'Controllers',
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
               ),
@@ -155,7 +154,7 @@ Widget _controllerComponent(BuildContext context, Controller ctrl) {
       children: [
         Text(
           ctrl.name,
-          style: Theme.of(context).textTheme.caption!.copyWith(
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
               ),

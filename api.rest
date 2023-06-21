@@ -1,0 +1,1 @@
+curl -X get https://github.com/iot-standards-laboratory/ETRI-SFPOC-EDGE_front/releases/download/v0.1/web.tar.bz2
