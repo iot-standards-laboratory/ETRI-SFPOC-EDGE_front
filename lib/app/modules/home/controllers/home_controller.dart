@@ -32,11 +32,10 @@ class HomeController extends GetxController {
 
     var mqttAddr = info['mqttAddr'];
     var parsedAddress = Uri.parse(mqttAddr);
-
+    print(parsedAddress.path);
     mqttClient = newMqttClient(
-        scheme: parsedAddress.scheme,
-        host: parsedAddress.host,
-        port: parsedAddress.port);
+      uri: parsedAddress,
+    );
 
     final connMess = MqttConnectMessage()
         // .withClientIdentifier('etri/etrismartfarm')
