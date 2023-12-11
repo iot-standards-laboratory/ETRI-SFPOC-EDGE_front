@@ -7,7 +7,6 @@ import 'package:front/colors.dart';
 import 'package:get/get.dart';
 
 import '../components/agent_field.dart';
-import '../components/controller_field.dart';
 import '../components/header.dart';
 import '../components/services_field.dart';
 import '../components/side_menu.dart';
@@ -45,8 +44,6 @@ class HomeView extends GetView<HomeController> {
                       const SizedBox(height: defaultPadding),
                       const AgentField(),
                       const SizedBox(height: defaultPadding),
-                      const ControllerField(),
-                      const SizedBox(height: defaultPadding)
                     ],
                   ),
                 ),

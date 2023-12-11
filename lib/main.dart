@@ -19,7 +19,7 @@ Future<String> load() async {
 void main() async {
   serverAddr = kIsWeb && !kDebugMode
       ? '${Uri.base.host}:${Uri.base.port}'
-      : 'vpn.godopu.com:9910';
+      : 'localhost:9910';
 
   var page = await load();
   runApp(MyApp(page: page));

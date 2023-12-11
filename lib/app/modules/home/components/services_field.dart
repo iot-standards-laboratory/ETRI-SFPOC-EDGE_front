@@ -20,7 +20,7 @@ class ServicesField extends GetView<HomeController> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Services',
+          'Images',
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
@@ -79,7 +79,7 @@ class ServicesField extends GetView<HomeController> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Services',
+          'Images',
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
@@ -146,90 +146,110 @@ class ServiceFieldComponent extends StatelessWidget {
   final Service info;
   const ServiceFieldComponent({super.key, required this.info});
 
+  Widget _body(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: Text(
+                '0 containers',
+                style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+              ),
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                info.status == 'disabled'
+                    ? const Icon(
+                        Icons.cancel_outlined,
+                        size: 24,
+                        color: Colors.red,
+                      )
+                    : const Icon(
+                        Icons.check_circle_outline,
+                        size: 30,
+                        color: Colors.green,
+                      ),
+                IconButton(
+                    icon: Icon(
+                      size: 24,
+                      info.cid == ''
+                          ? Icons.download_outlined
+                          : Icons.delete_outlined,
+                      color: Colors.white,
+                    ),
+                    onPressed: () async {
+                      if (info.cid == '') {
+                        installSvc(info);
+                      } else {
+                        deleteSvc(info);
+                      }
+                    }),
+              ],
+            ),
+          ],
+        ),
+        Text(
+          info.name!,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+        ),
+        TextButton(
+          child: Text(
+            info.cid!,
+            maxLines: 1,
+            // overflow: ,
+          ),
+          onPressed: () {
+            if (info.status != "enabled") {
+              Get.snackbar("Failed", "Service is not working");
+              return;
+            }
+            launchUrlString(
+              "${Uri.base.scheme}://$serverAddr/svc/${info.cid}",
+            );
+          },
+        )
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 280,
-      height: 200,
-      padding: const EdgeInsets.all(defaultPadding),
-      decoration: const BoxDecoration(
-        color: secondaryColor,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
+    return Draggable(
+      data: info,
+      feedback: Container(
+        width: 300,
+        height: 220,
+        padding: const EdgeInsets.all(defaultPadding),
+        decoration: BoxDecoration(
+          color: secondaryColor.withAlpha(100),
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+        ),
+        child: _body(context),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 3),
-                child: Text(
-                  '${info.numOfCtrls} devices',
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                      ),
-                ),
-              ),
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  info.status == 'disabled'
-                      ? const Icon(
-                          Icons.cancel_outlined,
-                          size: 24,
-                          color: Colors.red,
-                        )
-                      : const Icon(
-                          Icons.check_circle_outline,
-                          size: 30,
-                          color: Colors.green,
-                        ),
-                  IconButton(
-                      icon: Icon(
-                        size: 24,
-                        info.cid == ''
-                            ? Icons.download_outlined
-                            : Icons.delete_outlined,
-                        color: Colors.white,
-                      ),
-                      onPressed: () async {
-                        if (info.cid == '') {
-                          installSvc(info);
-                        } else {
-                          deleteSvc(info);
-                        }
-                      }),
-                ],
-              ),
-            ],
-          ),
-          Text(
-            info.name!,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(fontSize: 20),
-          ),
-          TextButton(
-            child: Text(
-              info.cid!,
-              maxLines: 1,
-              // overflow: ,
-            ),
-            onPressed: () {
-              if (info.status != "enabled") {
-                Get.snackbar("Failed", "Service is not working");
-                return;
-              }
-              launchUrlString(
-                "${Uri.base.scheme}://$serverAddr/svc/${info.cid}",
-              );
-            },
-          )
-        ],
+      child: Container(
+        width: 280,
+        height: 200,
+        padding: const EdgeInsets.all(defaultPadding),
+        decoration: const BoxDecoration(
+          color: secondaryColor,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        child: _body(context),
       ),
     );
   }
