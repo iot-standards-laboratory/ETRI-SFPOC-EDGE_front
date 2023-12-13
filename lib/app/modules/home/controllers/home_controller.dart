@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:front/app/controller/mqttclient.dart';
 import 'package:front/app/model/agent.dart';
 import 'package:front/app/model/controller.dart';
-import 'package:front/app/model/service.dart';
+import 'package:front/app/model/service_image.dart';
 import 'package:get/get.dart';
 import 'package:mqtt_client/mqtt_browser_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
@@ -13,7 +13,20 @@ class HomeController extends GetxController {
   //TODO: Implement HomeController
   var menuIdx = 0.obs;
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  var services = <Service>[].obs;
+  var images = <ServiceImage>[
+    ServiceImage(
+      name: 'test',
+      id: 'id',
+      cid: 'cid',
+      status: 'status',
+    ),
+    ServiceImage(
+      name: 'test',
+      id: 'id',
+      cid: 'cid',
+      status: 'status',
+    ),
+  ].obs;
   var agents = <Agent>[].obs;
   var ctrls = <Controller>[].obs;
 
@@ -65,7 +78,7 @@ class HomeController extends GetxController {
 
   void loadData() async {
     agents.value = await loadAgents();
-    services.value = await loadServices();
+    // images.value = await loadServices();
     ctrls.value = await loadCtrls();
   }
 

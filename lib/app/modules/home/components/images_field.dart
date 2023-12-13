@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:front/app/components/responsive.dart';
-import 'package:front/app/model/service.dart';
+import 'package:front/app/model/service_image.dart';
 import 'package:front/colors.dart';
 import 'package:front/constants.dart';
 import 'package:get/get.dart';
@@ -10,10 +10,10 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/http_loader.dart';
 
-class ServicesField extends GetView<HomeController> {
+class ImagesField extends GetView<HomeController> {
   final pageController = PageController(viewportFraction: 1, keepPage: true);
 
-  ServicesField({super.key});
+  ImagesField({super.key});
 
   Widget _render(BuildContext context) {
     return Column(
@@ -42,29 +42,17 @@ class ServicesField extends GetView<HomeController> {
               physics: const BouncingScrollPhysics(),
               child: Obx(
                 () {
-                  return controller.services.isEmpty
-                      ? Container(
-                          width: 280,
-                          height: 200,
-                          padding: const EdgeInsets.all(defaultPadding),
-                          decoration: const BoxDecoration(
-                            color: secondaryColor,
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: const Center(
-                            child: Text("Empty"),
-                          ),
-                        )
-                      : Row(
-                          children: controller.services
-                              .map(
-                                (e) => Padding(
-                                  padding: const EdgeInsets.only(right: 10),
-                                  child: ServiceFieldComponent(info: e),
-                                ),
-                              )
-                              .toList(),
-                        );
+                  return Row(
+                    children: [
+                      ...controller.images.map(
+                        (e) => Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: ImageFieldComponent(info: e),
+                        ),
+                      ),
+                      const _AddImageButton(),
+                    ],
+                  );
                 },
               ),
             ),
@@ -98,33 +86,25 @@ class ServicesField extends GetView<HomeController> {
                 PointerDeviceKind.touch,
                 PointerDeviceKind.stylus
               }),
-              child: Obx(() {
-                return controller.services.isEmpty
-                    ? Container(
-                        height: 200,
-                        padding: const EdgeInsets.all(defaultPadding),
-                        decoration: const BoxDecoration(
-                          color: secondaryColor,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        child: const Center(
-                          child: Text("Empty"),
-                        ),
-                      )
-                    : PageView.builder(
-                        itemCount: controller.services.length,
-                        controller: pageController,
+              child: Obx(
+                () {
+                  return PageView.builder(
+                    itemCount: controller.images.length + 1,
+                    controller: pageController,
 
-                        // itemCount: pages.length,
-                        itemBuilder: (_, idx) {
-                          return Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: ServiceFieldComponent(
-                                info: controller.services[idx]),
-                          );
-                        },
-                      );
-              }),
+                    // itemCount: pages.length,
+                    itemBuilder: (_, idx) {
+                      return idx == controller.images.length
+                          ? const _AddImageButton()
+                          : Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: ImageFieldComponent(
+                                  info: controller.images[idx]),
+                            );
+                    },
+                  );
+                },
+              ),
             ),
           ),
         ),
@@ -142,9 +122,41 @@ class ServicesField extends GetView<HomeController> {
   }
 }
 
-class ServiceFieldComponent extends StatelessWidget {
-  final Service info;
-  const ServiceFieldComponent({super.key, required this.info});
+class _AddImageButton extends StatelessWidget {
+  const _AddImageButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(80),
+        ),
+      ),
+      // Clip.hardEdge가 뭔지 조사해보기
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        focusColor: Colors.black,
+        onTap: () {},
+        child: Container(
+          width: 220,
+          height: 220,
+          decoration: BoxDecoration(
+            color: secondaryColor.withAlpha(100),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(80),
+            ),
+          ),
+          child: const Icon(Icons.add, size: 120),
+        ),
+      ),
+    );
+  }
+}
+
+class ImageFieldComponent extends StatelessWidget {
+  final ServiceImage info;
+  const ImageFieldComponent({super.key, required this.info});
 
   Widget _body(BuildContext context) {
     return Column(

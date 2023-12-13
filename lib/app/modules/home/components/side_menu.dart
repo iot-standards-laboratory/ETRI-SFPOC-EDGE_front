@@ -6,8 +6,8 @@ import '../controllers/home_controller.dart';
 
 class SideMenu extends GetView<HomeController> {
   const SideMenu({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +58,13 @@ class SideMenu extends GetView<HomeController> {
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
-    Key? key,
+    super.key,
     // For selecting those three line once press "Command+D"
     required this.title,
     required this.svgSrc,
     required this.press,
     required this.color,
-  }) : super(key: key);
+  });
 
   final String title, svgSrc;
   final VoidCallback press;

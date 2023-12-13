@@ -8,12 +8,12 @@ import 'package:get/get.dart';
 
 import '../components/agent_field.dart';
 import '../components/header.dart';
-import '../components/services_field.dart';
+import '../components/images_field.dart';
 import '../components/side_menu.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   Widget _render(BuildContext context) {
     return Obx(() {
@@ -40,7 +40,7 @@ class HomeView extends GetView<HomeController> {
                   child: Column(
                     children: [
                       if (!Responsive.isMobile(context)) const Header(),
-                      ServicesField(),
+                      ImagesField(),
                       const SizedBox(height: defaultPadding),
                       const AgentField(),
                       const SizedBox(height: defaultPadding),

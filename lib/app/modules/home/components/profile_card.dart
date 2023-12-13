@@ -4,9 +4,9 @@ import 'package:front/colors.dart';
 class ProfileCard extends StatelessWidget {
   void Function()? onPressed;
   ProfileCard({
-    Key? key,
+    super.key,
     this.onPressed,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

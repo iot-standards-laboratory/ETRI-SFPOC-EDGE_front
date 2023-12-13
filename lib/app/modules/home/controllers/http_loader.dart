@@ -2,20 +2,20 @@ import 'dart:convert';
 
 import 'package:front/app/model/agent.dart';
 import 'package:front/app/model/controller.dart';
-import 'package:front/app/model/service.dart';
+import 'package:front/app/model/service_image.dart';
 import 'package:front/constants.dart';
 import 'package:http/http.dart' as http;
 
 final uriGetter = Uri.base.scheme == 'http' ? Uri.http : Uri.https;
 
-Future<List<Service>> loadServices() async {
+Future<List<ServiceImage>> loadServices() async {
   var resp = await http.get(uriGetter(serverAddr, '/api/v2/svcs'));
 
   var body = jsonDecode(resp.body);
 
   var services = List.generate(
     body.length,
-    (index) => Service.fromJson((body[index])),
+    (index) => ServiceImage.fromJson((body[index])),
   ).toList();
 
   return services;
@@ -47,7 +47,7 @@ Future<List<Controller>> loadCtrls() async {
   return ctrls;
 }
 
-Future<int> installSvc(Service svc) async {
+Future<int> installSvc(ServiceImage svc) async {
   var resp = await http.post(
     uriGetter(serverAddr, '/api/v2/svcs'),
     headers: <String, String>{
@@ -60,7 +60,7 @@ Future<int> installSvc(Service svc) async {
   return resp.statusCode;
 }
 
-Future<int> deleteSvc(Service svc) async {
+Future<int> deleteSvc(ServiceImage svc) async {
   var resp = await http.delete(
     uriGetter(serverAddr, '/api/v2/svcs'),
     headers: <String, String>{

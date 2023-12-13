@@ -6,7 +6,7 @@ import 'package:front/app/modules/home/controllers/home_controller.dart';
 import 'package:front/colors.dart';
 import 'package:get/get.dart';
 
-import '../../../model/service.dart';
+import '../../../model/service_image.dart';
 
 class AgentField extends GetView<HomeController> {
   const AgentField({super.key});
@@ -213,8 +213,8 @@ Widget _makeRichText(BuildContext context, String key, String value) {
 
 Widget _agentComponent(BuildContext context, Agent agent) {
   return DragTarget(
-    onAccept: (data) {
-      print('${(data as Service).id} on ${agent.id}');
+    onAcceptWithDetails: (data) {
+      print('${(data as ServiceImage).id} on ${agent.id}');
     },
     builder: (context, candidateData, rejectedData) => Container(
       decoration: candidateData.isEmpty
