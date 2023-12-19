@@ -1,15 +1,18 @@
 class ServiceImage {
-  final String? name, id, cid;
+  final int? id;
+  final String? name, imageId;
   final String? status;
+  final String? createdAt;
 
-  ServiceImage({this.name, this.id, this.cid, this.status});
+  ServiceImage({this.id, this.name, this.imageId, this.status, this.createdAt});
 
   factory ServiceImage.fromJson(dynamic json) {
     return ServiceImage(
-      name: json['name'],
+      name: json['image_name'],
       id: json['id'],
-      cid: json['cid'],
+      imageId: json['image_id'],
       status: json['status'],
+      createdAt: json['created_at'],
     );
   }
 }

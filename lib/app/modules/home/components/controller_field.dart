@@ -1,22 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:front/app/components/responsive.dart';
-import 'package:front/app/model/agent.dart';
+import 'package:front/app/model/controller.dart';
 import 'package:front/app/modules/home/controllers/home_controller.dart';
 import 'package:front/colors.dart';
 import 'package:get/get.dart';
 
 import '../../../model/service_image.dart';
 
-class AgentField extends GetView<HomeController> {
-  const AgentField({super.key});
+class ControllerField extends GetView<HomeController> {
+  const ControllerField({super.key});
 
   Widget _render(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Agents',
+          'Controllers',
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
@@ -39,11 +39,11 @@ class AgentField extends GetView<HomeController> {
               child: Obx(() {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: controller.agents
+                  children: controller.controllers
                       .map(
                         (e) => Padding(
                           padding: const EdgeInsets.only(right: 10),
-                          child: _agentComponent(context, e),
+                          child: _controllerComponent(context, e),
                         ),
                       )
                       .toList(),
@@ -61,7 +61,7 @@ class AgentField extends GetView<HomeController> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Agents',
+          'Controllers',
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
@@ -85,11 +85,11 @@ class AgentField extends GetView<HomeController> {
                 () {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: controller.agents
+                    children: controller.controllers
                         .map(
                           (e) => Padding(
                             padding: const EdgeInsets.only(right: 10),
-                            child: _agentComponent(context, e),
+                            child: _controllerComponent(context, e),
                           ),
                         )
                         .toList(),
@@ -211,10 +211,10 @@ Widget _makeRichText(BuildContext context, String key, String value) {
   );
 }
 
-Widget _agentComponent(BuildContext context, Agent agent) {
+Widget _controllerComponent(BuildContext context, Controller agent) {
   return DragTarget(
     onAcceptWithDetails: (data) {
-      print('${(data as ServiceImage).id} on ${agent.id}');
+      print('${(data as ServiceImage).id} on ${agent.uuid}');
     },
     builder: (context, candidateData, rejectedData) => Container(
       decoration: candidateData.isEmpty
@@ -240,21 +240,21 @@ Widget _agentComponent(BuildContext context, Agent agent) {
             _makeRichText(context, "Name : ", agent.name),
             const SizedBox(height: 16),
             !Responsive.isMobile(context)
-                ? _makeRichText(context, "ID : ", agent.id)
+                ? _makeRichText(context, "ID : ", agent.uuid)
                 : Text(
-                    agent.id,
+                    agent.uuid,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 16),
                   ),
             const SizedBox(height: 16),
             Text(
-              agent.status,
+              agent.status ? "Connected" : "Disconnected",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
                 fontSize: 16,
-                color: agent.status == 'connected' ? Colors.green : Colors.red,
+                color: agent.status ? Colors.green : Colors.red,
               ),
             ),
             const SizedBox(height: 16),
@@ -272,11 +272,11 @@ Widget _agentComponent(BuildContext context, Agent agent) {
   );
 }
 
-DataRow _agentRow(Agent agent) {
+DataRow _controllerRow(Controller controller) {
   return DataRow(
     cells: [
-      DataCell(Text(agent.name)),
-      DataCell(Text(agent.id)),
+      DataCell(Text(controller.name)),
+      DataCell(Text(controller.uuid)),
       DataCell(
         DragTarget(
           builder: (context, candidateData, rejectedData) => Container(
@@ -289,9 +289,9 @@ DataRow _agentRow(Agent agent) {
                     ),
                   ),
             child: Text(
-              agent.status,
+              controller.status ? "Connected" : "Disconnected",
               style: TextStyle(
-                color: agent.status == 'connected' ? Colors.green : Colors.red,
+                color: controller.status ? Colors.green : Colors.red,
               ),
             ),
           ),

@@ -123,7 +123,7 @@ class ImagesField extends GetView<HomeController> {
 }
 
 class _AddImageButton extends StatelessWidget {
-  const _AddImageButton({super.key});
+  const _AddImageButton();
 
   @override
   Widget build(BuildContext context) {
@@ -194,17 +194,13 @@ class ImageFieldComponent extends StatelessWidget {
                 IconButton(
                     icon: Icon(
                       size: 24,
-                      info.cid == ''
+                      info.imageId == ''
                           ? Icons.download_outlined
                           : Icons.delete_outlined,
                       color: Colors.white,
                     ),
                     onPressed: () async {
-                      if (info.cid == '') {
-                        installSvc(info);
-                      } else {
-                        deleteSvc(info);
-                      }
+                      deleteSvc(info);
                     }),
               ],
             ),
@@ -221,9 +217,8 @@ class ImageFieldComponent extends StatelessWidget {
         ),
         TextButton(
           child: Text(
-            info.cid!,
+            info.imageId!,
             maxLines: 1,
-            // overflow: ,
           ),
           onPressed: () {
             if (info.status != "enabled") {
@@ -231,7 +226,7 @@ class ImageFieldComponent extends StatelessWidget {
               return;
             }
             launchUrlString(
-              "${Uri.base.scheme}://$serverAddr/svc/${info.cid}",
+              "${Uri.base.scheme}://$serverAddr/svc/${info.imageId}",
             );
           },
         )

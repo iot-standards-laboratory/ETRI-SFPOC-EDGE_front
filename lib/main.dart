@@ -8,7 +8,8 @@ import 'package:front/constants.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
- 
+import 'package:supabase_flutter/supabase_flutter.dart';
+
 Future<String> load() async {
   final uriGetter = Uri.base.scheme == 'http' ? Uri.http : Uri.https;
   var resp = await http.get(uriGetter(serverAddr, '/loading'));
@@ -17,6 +18,12 @@ Future<String> load() async {
 }
 
 void main() async {
+  await Supabase.initialize(
+    url: 'https://supabase.godopu.com',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyAgCiAgICAicm9sZSI6ICJhbm9uIiwKICAgICJpc3MiOiAic3VwYWJhc2UtZGVtbyIsCiAgICAiaWF0IjogMTY0MTc2OTIwMCwKICAgICJleHAiOiAxNzk5NTM1NjAwCn0.dc_X5iR_VP_qT0zsiyj_I_OZ2T9FtRU2BBNWN8Bu4GE',
+  );
+
   serverAddr = kIsWeb && !kDebugMode
       ? '${Uri.base.host}:${Uri.base.port}'
       : 'localhost:9910';

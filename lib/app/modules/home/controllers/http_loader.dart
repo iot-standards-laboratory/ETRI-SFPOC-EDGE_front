@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:front/app/model/agent.dart';
 import 'package:front/app/model/controller.dart';
+import 'package:front/app/model/device.dart';
 import 'package:front/app/model/service_image.dart';
 import 'package:front/constants.dart';
 import 'package:http/http.dart' as http;
@@ -22,13 +22,13 @@ Future<List<ServiceImage>> loadServices() async {
   // return <Service>[];
 }
 
-Future<List<Agent>> loadAgents() async {
+Future<List<Controller>> loadAgents() async {
   var resp = await http.get(uriGetter(serverAddr, '/api/v2/agents'));
 
   var body = jsonDecode(resp.body);
 
   var agents = List.generate(body.length, (index) {
-    return Agent.fromJson(body[index]);
+    return Controller.fromJson(body[index]);
   }).toList();
 
   return agents;
@@ -47,25 +47,12 @@ Future<List<Controller>> loadCtrls() async {
   return ctrls;
 }
 
-Future<int> installSvc(ServiceImage svc) async {
-  var resp = await http.post(
-    uriGetter(serverAddr, '/api/v2/svcs'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-      'service_name': svc.name!,
-      'service_id': svc.id!,
-    },
-  );
-
-  return resp.statusCode;
-}
-
 Future<int> deleteSvc(ServiceImage svc) async {
   var resp = await http.delete(
     uriGetter(serverAddr, '/api/v2/svcs'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'service_id': svc.id!,
+      'service_id': svc.id!.toString(),
     },
   );
 
