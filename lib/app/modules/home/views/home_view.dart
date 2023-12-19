@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 import '../components/controller_field.dart';
 import '../components/header.dart';
-import '../components/images_field.dart';
+import '../components/svc_field.dart';
 import '../components/side_menu.dart';
 import '../controllers/home_controller.dart';
 
@@ -40,7 +40,7 @@ class HomeView extends GetView<HomeController> {
                   child: Column(
                     children: [
                       if (!Responsive.isMobile(context)) const Header(),
-                      ImagesField(),
+                      ServicesField(),
                       const SizedBox(height: defaultPadding),
                       const ControllerField(),
                       const SizedBox(height: defaultPadding),

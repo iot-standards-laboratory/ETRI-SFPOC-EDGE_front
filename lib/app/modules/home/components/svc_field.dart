@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:front/app/components/responsive.dart';
 import 'package:front/app/model/service_image.dart';
+import 'package:front/app/modules/home/common/dialog.dart';
 import 'package:front/colors.dart';
 import 'package:front/constants.dart';
 import 'package:get/get.dart';
@@ -10,17 +11,17 @@ import 'package:url_launcher/url_launcher_string.dart';
 import '../controllers/home_controller.dart';
 import '../controllers/http_loader.dart';
 
-class ImagesField extends GetView<HomeController> {
+class ServicesField extends GetView<HomeController> {
   final pageController = PageController(viewportFraction: 1, keepPage: true);
 
-  ImagesField({super.key});
+  ServicesField({super.key});
 
   Widget _render(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Images',
+          'Services',
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 20,
@@ -44,13 +45,18 @@ class ImagesField extends GetView<HomeController> {
                 () {
                   return Row(
                     children: [
-                      ...controller.images.map(
+                      ...controller.svcs.map(
                         (e) => Padding(
                           padding: const EdgeInsets.only(right: 10),
-                          child: ImageFieldComponent(info: e),
+                          child: ImageFieldComponent(
+                            info: e,
+                            onDeleted: controller.deleteService,
+                          ),
                         ),
                       ),
-                      const _AddImageButton(),
+                      _AddImageButton(
+                        onTap: () => makeDialog(context),
+                      ),
                     ],
                   );
                 },
@@ -67,7 +73,7 @@ class ImagesField extends GetView<HomeController> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          'Images',
+          'Services',
           style: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Colors.white,
                 fontSize: 18,
@@ -89,17 +95,23 @@ class ImagesField extends GetView<HomeController> {
               child: Obx(
                 () {
                   return PageView.builder(
-                    itemCount: controller.images.length + 1,
+                    itemCount: controller.svcs.length + 1,
                     controller: pageController,
 
                     // itemCount: pages.length,
                     itemBuilder: (_, idx) {
-                      return idx == controller.images.length
-                          ? const _AddImageButton()
+                      return idx == controller.svcs.length
+                          ? _AddImageButton(
+                              onTap: () {
+                                print("Hello world");
+                              },
+                            )
                           : Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: ImageFieldComponent(
-                                  info: controller.images[idx]),
+                                info: controller.svcs[idx],
+                                onDeleted: controller.deleteService,
+                              ),
                             );
                     },
                   );
@@ -123,7 +135,8 @@ class ImagesField extends GetView<HomeController> {
 }
 
 class _AddImageButton extends StatelessWidget {
-  const _AddImageButton();
+  void Function() onTap;
+  _AddImageButton({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +150,7 @@ class _AddImageButton extends StatelessWidget {
       clipBehavior: Clip.hardEdge,
       child: InkWell(
         focusColor: Colors.black,
-        onTap: () {},
+        onTap: onTap,
         child: Container(
           width: 220,
           height: 220,
@@ -156,7 +169,9 @@ class _AddImageButton extends StatelessWidget {
 
 class ImageFieldComponent extends StatelessWidget {
   final ServiceImage info;
-  const ImageFieldComponent({super.key, required this.info});
+  final void Function(ServiceImage svc) onDeleted;
+  const ImageFieldComponent(
+      {super.key, required this.info, required this.onDeleted});
 
   Widget _body(BuildContext context) {
     return Column(
@@ -199,8 +214,8 @@ class ImageFieldComponent extends StatelessWidget {
                           : Icons.delete_outlined,
                       color: Colors.white,
                     ),
-                    onPressed: () async {
-                      deleteSvc(info);
+                    onPressed: () {
+                      onDeleted(info);
                     }),
               ],
             ),

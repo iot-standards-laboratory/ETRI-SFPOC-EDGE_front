@@ -39,7 +39,7 @@ class ControllerField extends GetView<HomeController> {
               child: Obx(() {
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: controller.controllers
+                  children: controller.ctrls
                       .map(
                         (e) => Padding(
                           padding: const EdgeInsets.only(right: 10),
@@ -85,7 +85,7 @@ class ControllerField extends GetView<HomeController> {
                 () {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: controller.controllers
+                    children: controller.ctrls
                         .map(
                           (e) => Padding(
                             padding: const EdgeInsets.only(right: 10),

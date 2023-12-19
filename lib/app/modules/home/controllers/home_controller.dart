@@ -7,28 +7,47 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class HomeController extends GetxController {
   //TODO: Implement HomeController
-  var menuIdx = 0.obs;
+  // supabase settings
   final supabase = Supabase.instance.client;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-  var images = <ServiceImage>[].obs;
-  var controllers = <Controller>[].obs;
-  var ctrls = <Controller>[].obs;
-
   @override
   void onInit() {
     super.onInit();
     // supabase.from('etri').select().eq('id', 1);
-    supabase.from('etri_images').stream(primaryKey: ['id']).listen(
+    supabase.from('etri_list_svcs').stream(primaryKey: ['id']).listen(
       (List<Map<String, dynamic>> data) {
-        images.clear();
-        images.addAll(data.map((e) => ServiceImage.fromJson(e)));
+        svcs.clear();
+        svcs.addAll(data.map((e) => ServiceImage.fromJson(e)));
       },
     );
-    supabase.from('etri_controllers').stream(primaryKey: ['id']).listen(
+    supabase.from('etri_list_ctrls').stream(primaryKey: ['id']).listen(
       (List<Map<String, dynamic>> data) {
-        controllers.clear();
-        controllers.addAll(data.map((e) => Controller.fromJson(e)));
+        ctrls.clear();
+        ctrls.addAll(data.map((e) => Controller.fromJson(e)));
       },
     );
+  }
+
+  // data
+  var menuIdx = 0.obs;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  var svcs = <ServiceImage>[].obs;
+  var ctrls = <Controller>[].obs;
+
+  void installService(ServiceImage svc) async {
+    var resp = await supabase.from('etri_list_svcs').insert(
+      {
+        'image_name': svc.name,
+        'image_id': svc.imageId,
+        'status': 'installing',
+      },
+    );
+
+    print(resp);
+  }
+
+  void deleteService(ServiceImage svc) async {
+    var resp = await supabase.from('etri_list_svcs').delete().eq('id', svc.id);
+
+    print(resp);
   }
 }

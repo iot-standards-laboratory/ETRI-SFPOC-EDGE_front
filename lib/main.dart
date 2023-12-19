@@ -26,7 +26,7 @@ void main() async {
 
   serverAddr = kIsWeb && !kDebugMode
       ? '${Uri.base.host}:${Uri.base.port}'
-      : 'localhost:9910';
+      : 'code.godopu.com:9995';
 
   var page = await load();
   runApp(MyApp(page: page));
