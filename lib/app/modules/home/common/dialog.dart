@@ -13,6 +13,54 @@ import 'package:front/app/model/service_image.dart';
 //   );
 // }
 
+const logos = [
+  'assets/images/logo_etri_basic.png',
+  'assets/images/logo_etri_pro.png',
+  'assets/images/logo_agworld.png',
+  'assets/images/logo_conservis.jpg',
+  'assets/images/logo_farmos.png',
+  'assets/images/logo_tanibox.png',
+  'assets/images/logo_agrivi.png',
+];
+const execScreens = [
+  'assets/images/exec_agworld.png',
+  'assets/images/exec_agworld.png',
+  'assets/images/exec_agworld.png',
+];
+const svcNames = [
+  'ETRI Smart Farm (basic)',
+  'ETRI Smart Farm (pro)',
+  'AgWorld',
+  'Conservis',
+  'Farmos',
+  'TaniBox',
+  'Agrivi',
+];
+const descriptions = [
+  "Provide a function for monitoring and controlling the environment of the farm.",
+  "Provide a function for monitoring and controlling the environment of the farm.",
+  "Global platform connecting farmers with agricultural resources and information.",
+  "AI-powered irrigation management system optimizing water use for farms.",
+  "Farm data management platform offering precision agriculture tools and insights.",
+  "Smartphone app and sensor system for remote livestock monitoring and management.",
+  "Agritech marketplace enabling farmers to directly buy and sell agricultural produce.",
+];
+const uuids = [
+  'b13cccee-041c-48ce-b0fb-cafb9f8c23e4',
+  '6e6a0aab-dd0d-44d1-8464-e976d465f1ad',
+  'f6cbb20e-9eed-11ee-8c90-0242ac120002',
+  'fc378524-9eed-11ee-8c90-0242ac120002',
+  '0136c652-9eee-11ee-8c90-0242ac120002',
+  '05dd5a9a-9eee-11ee-8c90-0242ac120002',
+  '0a23375a-9eee-11ee-8c90-0242ac120002'
+];
+
+var colors = [
+  [Colors.orange, Colors.pink],
+  [Colors.purple, Colors.blue],
+  [Colors.green.withAlpha(100), Colors.green],
+];
+
 Future<String?> makeDialog(BuildContext context) async {
   var result = await showDialog(
     builder: (context) => AlertDialog(
@@ -78,53 +126,23 @@ Future<String?> makeDialog(BuildContext context) async {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _installableServiceComponent(
-                  context,
-                  colors: [Colors.orange, Colors.pink],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
+                ...List<Widget>.generate(
+                  3,
+                  (index) => _installableServiceComponent(
+                    context,
+                    colors: colors[index],
+                    logo: Image.asset(
+                      logos[index],
+                      fit: BoxFit.cover,
+                    ),
+                    execScreen: Image.network(
+                      execScreens[index],
+                      fit: BoxFit.cover,
+                    ),
+                    svcName: svcNames[index],
+                    description: descriptions[index],
+                    uuid: uuids[index],
                   ),
-                  execScreen: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description:
-                      "Provide a function for monitoring and controlling the environment of the farm.",
-                  uuid: "6e6a0aab-dd0d-44d1-8464-e976d465f1ad",
-                ),
-                _installableServiceComponent(
-                  context,
-                  colors: [Colors.green.withAlpha(100), Colors.green],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  execScreen: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description:
-                      "Provide a function for monitoring and controlling the environment of the farm.",
-                  uuid: "uuid-2",
-                ),
-                _installableServiceComponent(
-                  context,
-                  colors: [Colors.purple, Colors.blue],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  execScreen: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description:
-                      "Provide a function for monitoring and controlling the environment of the farm.",
-                  uuid: "uuid-3",
                 ),
               ],
             ),
@@ -134,49 +152,19 @@ Future<String?> makeDialog(BuildContext context) async {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _installableServiceSmallComponent(
-                  context,
-                  colors: [Colors.purple, Colors.blue],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
+                ...List<Widget>.generate(
+                  4,
+                  (index) => _installableServiceSmallComponent(
+                    context,
+                    colors: [Colors.purple, Colors.blue],
+                    logo: Image.asset(
+                      logos[index + 3],
+                      fit: BoxFit.cover,
+                    ),
+                    svcName: svcNames[index + 3],
+                    description: descriptions[index + 3],
+                    uuid: uuids[index + 3],
                   ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description: "Provide a function for ",
-                  uuid: "uuid-3",
-                ),
-                _installableServiceSmallComponent(
-                  context,
-                  colors: [Colors.purple, Colors.blue],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description: "Provide a function for ",
-                  uuid: "uuid-3",
-                ),
-                _installableServiceSmallComponent(
-                  context,
-                  colors: [Colors.purple, Colors.blue],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description: "Provide a function for ",
-                  uuid: "uuid-3",
-                ),
-                _installableServiceSmallComponent(
-                  context,
-                  colors: [Colors.purple, Colors.blue],
-                  logo: Image.network(
-                    "https://placeimg.com/640/480/nature",
-                    fit: BoxFit.cover,
-                  ),
-                  svcName: "ETRI Smart Farm (basic)",
-                  description: "Provide a function for ",
-                  uuid: "uuid-3",
                 ),
               ],
             )
@@ -220,15 +208,18 @@ Widget _installableServiceComponent(
           child: Stack(
             children: [
               Align(
-                alignment: Alignment.centerLeft,
-                child: Text(svcName),
-              ),
-              Align(
                 alignment: Alignment.centerRight,
                 child: SizedBox(
                   width: 200,
                   height: 150,
                   child: execScreen,
+                ),
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Text(svcName),
                 ),
               ),
             ],
@@ -241,7 +232,7 @@ Widget _installableServiceComponent(
               // Set elevation for shadow effect
               width: 60,
               height: 60,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(5.0),
               margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
@@ -255,10 +246,7 @@ Widget _installableServiceComponent(
                   ),
                 ],
               ),
-              child: Image.network(
-                "https://placeimg.com/640/480/nature",
-                fit: BoxFit.cover,
-              ),
+              child: logo,
             ),
             Expanded(
               child: Column(
@@ -290,8 +278,11 @@ Widget _installableServiceComponent(
         ),
         const SizedBox(height: 20),
         ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).pop(uuid);
+          onPressed: () async {
+            var result = await _makeConfirmDialog(context);
+            if (result) {
+              Navigator.of(context).pop(uuid);
+            }
           },
           child: const Text("Install"),
         )
@@ -319,7 +310,7 @@ Widget _installableServiceSmallComponent(
               // Set elevation for shadow effect
               width: 60,
               height: 60,
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(8.0),
               margin: const EdgeInsets.all(8.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
@@ -377,4 +368,32 @@ Widget _installableServiceSmallComponent(
       ],
     ),
   );
+}
+
+Future<bool> _makeConfirmDialog(BuildContext context) async {
+  var result = await showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Confirm'),
+        content: const Text('Are you sure to install this service?'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+            child: const Text('Yes'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            child: const Text('No'),
+          ),
+        ],
+      );
+    },
+  );
+
+  return result as bool;
 }
