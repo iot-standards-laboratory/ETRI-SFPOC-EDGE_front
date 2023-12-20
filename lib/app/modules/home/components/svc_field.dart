@@ -54,9 +54,10 @@ class ServicesField extends GetView<HomeController> {
                           ),
                         ),
                       ),
-                      _AddImageButton(
-                        onTap: () => makeDialog(context),
-                      ),
+                      _AddImageButton(onTap: () async {
+                        var result = await makeDialog(context);
+                        controller.installService(result as String);
+                      }),
                     ],
                   );
                 },

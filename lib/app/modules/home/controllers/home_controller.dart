@@ -33,16 +33,18 @@ class HomeController extends GetxController {
   var svcs = <ServiceImage>[].obs;
   var ctrls = <Controller>[].obs;
 
-  void installService(ServiceImage svc) async {
-    var resp = await supabase.from('etri_list_svcs').insert(
-      {
-        'image_name': svc.name,
-        'image_id': svc.imageId,
-        'status': 'installing',
-      },
-    );
+  void installService(String img_id) async {
+    await supabase.rpc("etri_func_install_svc",
+        params: {"_uuid": "6e6a0aab-dd0d-44d1-8464-e976d465f1ad"});
+    // var resp = await supabase.from('etri_list_svcs').insert(
+    //   {
+    //     'image_name': svc.name,
+    //     'image_id': svc.imageId,
+    //     'status': 'installing',
+    //   },
+    // );
 
-    print(resp);
+    // print(resp);
   }
 
   void deleteService(ServiceImage svc) async {
