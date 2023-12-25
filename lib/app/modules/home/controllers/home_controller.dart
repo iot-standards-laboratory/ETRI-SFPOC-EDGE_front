@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:front/app/model/controller.dart';
-import 'package:front/app/model/device.dart';
 import 'package:front/app/model/service_image.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -25,6 +24,19 @@ class HomeController extends GetxController {
         ctrls.addAll(data.map((e) => Controller.fromJson(e)));
       },
     );
+    supabase
+        .from('etri_map_ctrls_svcs')
+        .stream(primaryKey: ['svc_id', 'ctrl_id']).listen(
+      (List<Map<String, dynamic>> data) async {
+        mapCtrlsSvcs.clear();
+        var resp = await supabase
+            .from('etri_map_ctrls_svcs')
+            .select('etri_list_ctrls(id), etri_list_svcs(*)');
+        for (var e in resp) {
+          mapCtrlsSvcs[e['etri_list_ctrls']['id']] = e['etri_list_svcs'];
+        }
+      },
+    );
   }
 
   // data
@@ -32,10 +44,10 @@ class HomeController extends GetxController {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   var svcs = <ServiceImage>[].obs;
   var ctrls = <Controller>[].obs;
+  var mapCtrlsSvcs = <String, dynamic>{}.obs;
 
-  void installService(String img_id) async {
-    await supabase.rpc("etri_func_install_svc",
-        params: {"_uuid": "6e6a0aab-dd0d-44d1-8464-e976d465f1ad"});
+  void installService(String imgId) async {
+    await supabase.rpc("etri_func_install_svc", params: {"_uuid": imgId});
     // var resp = await supabase.from('etri_list_svcs').insert(
     //   {
     //     'image_name': svc.name,

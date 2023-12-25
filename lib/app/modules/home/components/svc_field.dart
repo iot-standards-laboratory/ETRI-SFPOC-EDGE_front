@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 import '../controllers/home_controller.dart';
-import '../controllers/http_loader.dart';
 
 class ServicesField extends GetView<HomeController> {
   final pageController = PageController(viewportFraction: 1, keepPage: true);
@@ -139,8 +138,8 @@ class ServicesField extends GetView<HomeController> {
 }
 
 class _AddImageButton extends StatelessWidget {
-  void Function() onTap;
-  _AddImageButton({required this.onTap});
+  final void Function() onTap;
+  const _AddImageButton({required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -205,11 +204,19 @@ class ImageFieldComponent extends StatelessWidget {
                         size: 24,
                         color: Colors.red,
                       )
-                    : const Icon(
-                        Icons.check_circle_outline,
-                        size: 30,
-                        color: Colors.green,
-                      ),
+                    : info.status == 'installing'
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(
+                              color: Colors.lightBlue,
+                            ),
+                          )
+                        : const Icon(
+                            Icons.check_circle_outline,
+                            size: 30,
+                            color: Colors.green,
+                          ),
                 IconButton(
                     icon: Icon(
                       size: 24,

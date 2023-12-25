@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:front/app/model/service_image.dart';
 
 // void makeDialog(BuildContext context) async {
 //   var result = await showDialog(
@@ -38,7 +37,7 @@ const svcNames = [
 ];
 const descriptions = [
   "Provide a function for monitoring and controlling the environment of the farm.",
-  "Provide a function for monitoring and controlling the environment of the farm.",
+  "Provide a advanced function for monitoring and controlling the farm.",
   "Global platform connecting farmers with agricultural resources and information.",
   "AI-powered irrigation management system optimizing water use for farms.",
   "Farm data management platform offering precision agriculture tools and insights.",
@@ -371,16 +370,28 @@ Widget _installableServiceSmallComponent(
 }
 
 Future<bool> _makeConfirmDialog(BuildContext context) async {
+  var confirmKey = GlobalKey();
   var result = await showDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
         title: const Text('Confirm'),
-        content: const Text('Are you sure to install this service?'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Are you sure to install this service?'),
+            const SizedBox(height: 20),
+            CustomProgressBar(key: confirmKey),
+          ],
+        ),
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.of(context).pop(true);
+              (confirmKey.currentState as _CustomProgressBarState).confirm();
+              Future.delayed(const Duration(seconds: 1), () {
+                Navigator.of(context).pop(true);
+              });
             },
             child: const Text('Yes'),
           ),
@@ -396,4 +407,35 @@ Future<bool> _makeConfirmDialog(BuildContext context) async {
   );
 
   return result as bool;
+}
+
+class CustomProgressBar extends StatefulWidget {
+  const CustomProgressBar({super.key});
+
+  @override
+  State<CustomProgressBar> createState() => _CustomProgressBarState();
+}
+
+class _CustomProgressBarState extends State<CustomProgressBar> {
+  bool isConfirm = false;
+  void confirm() {
+    setState(() {
+      isConfirm = true;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      height: 10,
+      width: isConfirm ? 250 : 0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        gradient: const LinearGradient(
+          colors: [Colors.green, Colors.blue],
+        ),
+      ),
+      duration: const Duration(seconds: 1),
+    );
+  }
 }

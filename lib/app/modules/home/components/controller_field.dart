@@ -214,7 +214,7 @@ Widget _makeRichText(BuildContext context, String key, String value) {
 Widget _controllerComponent(BuildContext context, Controller agent) {
   return DragTarget(
     onAcceptWithDetails: (data) {
-      print('${(data as ServiceImage).id} on ${agent.uuid}');
+      print('${(data as ServiceImage).id} on ${agent.id}');
     },
     builder: (context, candidateData, rejectedData) => Container(
       decoration: candidateData.isEmpty
@@ -240,9 +240,9 @@ Widget _controllerComponent(BuildContext context, Controller agent) {
             _makeRichText(context, "Name : ", agent.name),
             const SizedBox(height: 16),
             !Responsive.isMobile(context)
-                ? _makeRichText(context, "ID : ", agent.uuid)
+                ? _makeRichText(context, "ID : ", agent.id)
                 : Text(
-                    agent.uuid,
+                    agent.id,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: const TextStyle(fontSize: 16),
@@ -276,7 +276,7 @@ DataRow _controllerRow(Controller controller) {
   return DataRow(
     cells: [
       DataCell(Text(controller.name)),
-      DataCell(Text(controller.uuid)),
+      DataCell(Text(controller.id)),
       DataCell(
         DragTarget(
           builder: (context, candidateData, rejectedData) => Container(

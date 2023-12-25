@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:front/app/model/controller.dart';
-import 'package:front/app/model/device.dart';
 import 'package:front/app/model/service_image.dart';
 import 'package:front/constants.dart';
 import 'package:http/http.dart' as http;
@@ -52,7 +51,7 @@ Future<int> deleteSvc(ServiceImage svc) async {
     uriGetter(serverAddr, '/api/v2/svcs'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
-      'service_id': svc.id!.toString(),
+      'service_id': svc.id.toString(),
     },
   );
 

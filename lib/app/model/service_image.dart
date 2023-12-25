@@ -1,5 +1,5 @@
 class ServiceImage {
-  final int id;
+  final String id;
   final String? name, imageId;
   final String? status;
   final String? createdAt;
@@ -15,8 +15,8 @@ class ServiceImage {
   factory ServiceImage.fromJson(dynamic json) {
     return ServiceImage(
       id: json['id'],
-      name: json['image_name'],
-      imageId: json['image_id'],
+      name: json['img_name'],
+      imageId: json['img_id'],
       status: json['status'],
       createdAt: json['created_at'],
     );
