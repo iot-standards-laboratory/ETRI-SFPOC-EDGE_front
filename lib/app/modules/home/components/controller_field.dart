@@ -5,6 +5,8 @@ import 'package:front/app/model/controller.dart';
 import 'package:front/app/modules/home/controllers/home_controller.dart';
 import 'package:front/colors.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../model/service_image.dart';
 
@@ -214,7 +216,11 @@ Widget _makeRichText(BuildContext context, String key, String value) {
 Widget _controllerComponent(BuildContext context, Controller agent) {
   return DragTarget(
     onAcceptWithDetails: (data) {
-      print('${(data as ServiceImage).id} on ${agent.id}');
+      HomeController.to.registerService(
+        (data.data as ServiceImage).id,
+        agent.id,
+      );
+      // print((data.data as ServiceImage).id);
     },
     builder: (context, candidateData, rejectedData) => Container(
       decoration: candidateData.isEmpty
@@ -258,13 +264,13 @@ Widget _controllerComponent(BuildContext context, Controller agent) {
               ),
             ),
             const SizedBox(height: 16),
-            const ExpansionTile(
-              title: Text('Controllers'),
-              subtitle: Text('The number of connected controllers: 1'),
-              children: <Widget>[
-                ListTile(title: Text('This is tile number 1')),
-              ],
-            ),
+            GetX<HomeController>(builder: (ctrl) {
+              return RegisteredSvcListComp(
+                ctrlId: agent.id,
+                svcs: ctrl.mapCtrlsSvcs[agent.id] ?? [],
+                onLongPress: ctrl.unregisterService,
+              );
+            })
           ],
         ),
       ),
@@ -299,4 +305,71 @@ DataRow _controllerRow(Controller controller) {
       ),
     ],
   );
+}
+
+class RegisteredSvcListComp extends StatelessWidget {
+  final List<Map<String, dynamic>> svcs;
+  final String ctrlId;
+  final void Function(String svc_id, String ctrl_id) onLongPress;
+
+  const RegisteredSvcListComp({
+    super.key,
+    required this.svcs,
+    required this.ctrlId,
+    required this.onLongPress,
+  });
+
+  Widget _makeSvcComp({
+    required String svcId,
+    required String name,
+    required void Function()? onTap,
+  }) {
+    return Material(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(80),
+        ),
+      ),
+      // Clip.hardEdge가 뭔지 조사해보기
+      clipBehavior: Clip.hardEdge,
+      child: InkWell(
+        focusColor: Colors.black,
+        onTap: onTap,
+        onLongPress: () {
+          onLongPress(svcId, ctrlId);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.purple.withAlpha(50),
+            borderRadius: const BorderRadius.all(
+              Radius.circular(80),
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Text(name),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print(svcs);
+    return Wrap(
+      children: svcs
+          .map(
+            (e) => _makeSvcComp(
+              svcId: e['id'],
+              name: e['img_name'],
+              onTap: () {
+                launchUrlString(
+                    'http://code.godopu.com:9995/svc/55372cfb-01a8-4704-bbb8-f9d0aaac2686?name=hello');
+              },
+            ),
+          )
+          .toList(),
+    );
+  }
 }
